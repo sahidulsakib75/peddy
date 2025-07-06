@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Peddy</title>
+    <link rel="shortcut icon" href="assets/logo.webp" type="image/x-icon">
 
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -91,11 +92,11 @@
         </section>
 
         <section>
-            <div class="flex justify-between items-center my-6">
-                <h5 class="text-xl font-bold">
+            <div class="lg:flex lg:justify-between text-center lg:items-center my-6 ">
+                <h5 class="text-xl font-bold mb-6 lg:mb-0">
                     Best Deal For you
                 </h5>
-                <button onclick="sort()" class="btn bg-teal-800 text-lg text-white">
+                <button onclick="sort()" class="btn bg-teal-800 text-lg text-white ">
                     Sort by Price
                 </button>
             </div>
@@ -166,7 +167,7 @@
     <footer class="bg-black w-full">
         <div class="w-10/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 py-14 gap-6 lg:flex    ">
 
-            <div class="text-white w-6/12">
+            <div class="text-white lg:w-6/12">
                 <div class="flex gap-2 items-center mb-6">
                     <img class="w-6 h-6" src="assets/logo.webp" alt="" />
                     <h4 class="text-xl md:text-2xl font-semibold md:font-bold text-white">
@@ -185,7 +186,7 @@
                     <i class="fa-brands fa-instagram text-2xl text-red-600"></i>
                 </div>
             </div>
-            <div class="w-6/12 lg:flex lg:justify-between">
+            <div class="lg:w-6/12 lg:flex lg:justify-between">
                 <div class="text-white flex flex-col">
                     <h4 class="mb-8">Useful Links</h4>
                     <a class="text-gray-500" href="#">
