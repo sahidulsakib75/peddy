@@ -1,6 +1,4 @@
-
 // loadCategories
-
 const loadCategories = () => {
   fetch("https://openapi.programming-hero.com/api/peddy/categories")
     .then((res) => res.json())
@@ -9,36 +7,47 @@ const loadCategories = () => {
 };
 
 removeActiveClasses = () => {
-const buttons = document.getElementsByClassName("category-btn");
-for(let btn of buttons){
+  const buttons = document.getElementsByClassName("category-btn");
+  for (let btn of buttons) {
 
-  btn.classList.remove("active");
+    btn.classList.remove("active");
 
-}
+  }
 };
-//  load Pets by category with active button
-loadCategoryPets = (category) => {
- 
- fetch(`https://openapi.programming-hero.com/api/peddy/category/${category}`)
-    .then((res) => res.json())
-    .then((data) => {
-      removeActiveClasses();
-const activeBtn = document.getElementById(`btn-${category}`);
-activeBtn.classList.add("active");
-      displayPets(data.data);
-    })
-    .catch((error) => console.log(error));
 
+//  load Pets by category with active button with spinner
+const loadCategoryPets = (category) => {
+  loadingSpinner(true);
+  removeActiveClasses();
+
+  setTimeout(() => {
+
+    fetch(`https://openapi.programming-hero.com/api/peddy/category/${category}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const activeBtn = document.getElementById(`btn-${category}`);
+        activeBtn.classList.add("active");
+        displayPets(data.data);
+        loadingSpinner(false);
+      })
+
+      .catch((error) => {
+        console.log(error);
+        loadingSpinner(false);
+      });
+  }, 1500);
 };
+
+
 // display categories
 const displayCategories = (categories) => {
-const categoryContainer = document.getElementById("categories");
+  const categoryContainer = document.getElementById("categories");
 
-categories.forEach((element) => {
+  categories.forEach((element) => {
     const buttonContainer = document.createElement("div");
     buttonContainer.classList = "my-4";
 
-buttonContainer.innerHTML = `
+    buttonContainer.innerHTML = `
 <button id="btn-${element.category}" onclick="loadCategoryPets('${element.category}')"  class="w-full mx-auto bg-white text-teal-800 border-2 shadow-lg rounded-lg py-2 px-4 flex items-center gap-2 hover:bg-teal-600 cursor-pointer hover:border-0 hover:text-white  hover:shadow-xl  category-btn  justify-center"> 
 <img class="w-fit h-10" src="${element.category_icon}"/>
     <p class="text-xl font-bold">${element.category}</p>
@@ -49,7 +58,6 @@ buttonContainer.innerHTML = `
 };
 
 // load All Pets
-
 const loadAllPets = () => {
   fetch("https://openapi.programming-hero.com/api/peddy/pets")
     .then((res) => res.json())
@@ -59,14 +67,15 @@ const loadAllPets = () => {
     })
     .catch((error) => console.log(error));
 };
+
 //display all pets
 const displayPets = (pets) => {
-const petsContainer = document.getElementById("all-pets");
-petsContainer.innerHTML = "";
+  const petsContainer = document.getElementById("all-pets");
+  petsContainer.innerHTML = "";
 
-if (pets.length == 0) {
-petsContainer.classList.remove("lg:grid");
-petsContainer.innerHTML =`
+  if (pets.length == 0) {
+    petsContainer.classList.remove("lg:grid");
+    petsContainer.innerHTML = `
 <div class="bg-gray-100 p-20 rounded-xl text-center space-y-4 cols-span-3">
     <img class="mx-auto" src="assets/error.webp"/>
     <h3 class="text-3xl font-semibold">No Information Available</h3>
@@ -75,24 +84,24 @@ its layout. The point of using Lorem Ipsum is that it has a.
      </p>
     </div>
 `;
-return;
-}
+    return;
+  }
 
-else{
-  petsContainer.classList.add("lg:grid");
-};
+  else {
+    petsContainer.classList.add("lg:grid");
+  };
 
-pets.forEach((pet) => {
+  pets.forEach((pet) => {
     const div = document.createElement("div");
     div.classList = "border border-gray-200 rounded-lg p-4 shadow-lg hover:shadow-xl ";
-    
-        div.innerHTML = `
+
+    div.innerHTML = `
     <img class="h-36 w-full rounded-xl object-cover" src="${pet.image}"/>
     <h3 class="text-xl my-2">${pet.pet_name}</h3>
-    <p class="text-sm text-gray-700">Breed: ${pet.breed ? pet.breed : "Not Available" }</p>
-    <p class="text-sm text-gray-700">Birth: ${pet.date_of_birth ? pet.date_of_birth : "Not Available" }</p>
-    <p class="text-sm text-gray-700">Gender: ${pet.gender ? pet.gender : "Not Available" }</p>
-    <p class="text-sm text-gray-700">Price:  ${pet.price ? "$" + pet.price : "Not Available" }</p>
+    <p class="text-sm text-gray-700">Breed: ${pet.breed ? pet.breed : "Not Available"}</p>
+    <p class="text-sm text-gray-700">Birth: ${pet.date_of_birth ? pet.date_of_birth : "Not Available"}</p>
+    <p class="text-sm text-gray-700">Gender: ${pet.gender ? pet.gender : "Not Available"}</p>
+    <p class="text-sm text-gray-700">Price:  ${pet.price ? "$" + pet.price : "Not Available"}</p>
     <hr class="my-2 text-gray-300"/>
     <div class="flex justify-between items-center px-2">
     <button onclick="like('${pet.image}')" class="btn bg-white text-teal-800 border rounded-lg py-1 px-4">
@@ -108,23 +117,12 @@ pets.forEach((pet) => {
 
 
 
-//load pets details by id
-const loadPetDetails = async (id) => {
-  const res = await fetch(
-    `https://openapi.programming-hero.com/api/peddy/pet/${id}`
-  );
-  const data = await res.json();
-  displayPetDetails(data.petData)
-};
-
-// handle like button 
+//like button 
 const like = imageUrl => {
   const imageContainer = document.getElementById('like-pets')
   const div = document.createElement('div')
   div.classList = "  rounded-xl  p-4";
-    div.innerHTML = `
-    <img class="rounded-lg" src="${imageUrl}"/>
-    `;
+  div.innerHTML = `<img class="rounded-lg" src="${imageUrl}"/>`;
   imageContainer.appendChild(div)
 }
 
@@ -145,6 +143,16 @@ const adoptModal = (event) => {
       event.disabled = "true";
     }
   }, 1000);
+};
+
+
+//load pets details by id
+const loadPetDetails = async (id) => {
+  const res = await fetch(
+    `https://openapi.programming-hero.com/api/peddy/pet/${id}`
+  );
+  const data = await res.json();
+  displayPetDetails(data.petData)
 };
 
 
@@ -191,18 +199,31 @@ const displayPetDetails = data => {
 }
 
 
-// sorting descending order by price
-let allPets = []; 
+// sorting descending order by price with spinner
+let allPets = [];
 const sort = () => {
-  const sortedData = allPets.sort(function(a, b) {
+  loadingSpinner(true)
+  const sortedData = allPets.sort(function (a, b) {
     return b.price - a.price;
   });
-
-  displayPets(sortedData);
+  setTimeout(() => {
+    loadingSpinner(false)
+    displayPets(sortedData)
+  }, 2000);
 };
 
 
-
+// loading spinner
+const loadingSpinner = show => {
+  const spinner = document.getElementById('spinner')
+  if (show) {
+    spinner.classList.remove('hidden')
+    document.getElementById('all-pets').innerHTML = ''
+  }
+  else {
+    spinner.classList.add('hidden')
+  }
+}
 
 
 loadCategories();
