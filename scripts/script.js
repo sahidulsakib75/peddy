@@ -1,3 +1,4 @@
+
 // loadCategories
 
 const loadCategories = () => {
@@ -15,11 +16,9 @@ for(let btn of buttons){
 
 }
 };
-
+//  load Pets by category with active button
 loadCategoryPets = (category) => {
  
-
-
  fetch(`https://openapi.programming-hero.com/api/peddy/category/${category}`)
     .then((res) => res.json())
     .then((data) => {
@@ -31,7 +30,7 @@ activeBtn.classList.add("active");
     .catch((error) => console.log(error));
 
 };
-
+// display categories
 const displayCategories = (categories) => {
 const categoryContainer = document.getElementById("categories");
 
@@ -49,15 +48,18 @@ buttonContainer.innerHTML = `
   });
 };
 
-// loadAllPets
+// load All Pets
 
 const loadAllPets = () => {
   fetch("https://openapi.programming-hero.com/api/peddy/pets")
     .then((res) => res.json())
-    .then((data) => displayPets(data.pets))
+    .then((data) => {
+      allPets = data.pets;
+      displayPets(data.pets);
+    })
     .catch((error) => console.log(error));
 };
-
+//display all pets
 const displayPets = (pets) => {
 const petsContainer = document.getElementById("all-pets");
 petsContainer.innerHTML = "";
@@ -106,9 +108,28 @@ pets.forEach((pet) => {
 
 
 
+//load pets details by id
+const loadPetDetails = async (id) => {
+  const res = await fetch(
+    `https://openapi.programming-hero.com/api/peddy/pet/${id}`
+  );
+  const data = await res.json();
+  displayPetDetails(data.petData)
+};
+
+// handle like button 
+const like = imageUrl => {
+  const imageContainer = document.getElementById('like-pets')
+  const div = document.createElement('div')
+  div.classList = "  rounded-xl  p-4";
+    div.innerHTML = `
+    <img class="rounded-lg" src="${imageUrl}"/>
+    `;
+  imageContainer.appendChild(div)
+}
 
 
-//adopt button functionality
+//adopt button
 const adoptModal = (event) => {
   let count = 3;
   const countContainer = document.getElementById("countdown-container");
@@ -127,15 +148,6 @@ const adoptModal = (event) => {
 };
 
 
-
-//load pets details by id
-const loadPetDetails = async (id) => {
-  const res = await fetch(
-    `https://openapi.programming-hero.com/api/peddy/pet/${id}`
-  );
-  const data = await res.json();
-  displayPetDetails(data.petData)
-};
 // display pet details 
 const displayPetDetails = data => {
   const modalBody = document.getElementById('details-container')
@@ -179,21 +191,18 @@ const displayPetDetails = data => {
 }
 
 
+// sorting descending order by price
+let allPets = []; 
+const sort = () => {
+  const sortedData = allPets.sort(function(a, b) {
+    return b.price - a.price;
+  });
 
-// handle like button 
-const like = imageUrl => {
-  const imageContainer = document.getElementById('like-pets')
-  const div = document.createElement('div')
-  div.classList = "  rounded-xl  p-4";
-    div.innerHTML = `
-    <img class="rounded-lg" src="${imageUrl}"/>
-    `;
-  imageContainer.appendChild(div)
-}
-
-function sort(){
-console.log("sort");
+  displayPets(sortedData);
 };
+
+
+
 
 
 loadCategories();

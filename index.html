@@ -101,18 +101,28 @@
             </div>
         </section>
 
+
+
+
+
         <section class="mx-auto">
             <div class="lg:grid grid-cols-4 gap-6">
                 <div class="col-span-3 my-12">
+
+
+                    <div id="spinner" class="hidden text-center my-10">
+                        <span class="loading loading-spinner loading-lg text-teal-600"></span>
+                    </div>
+
                     <div id="all-pets" class="lg:grid grid-cols-3 gap-6">
 
                     </div>
                 </div>
-<div class="border border-gray-300 my-12 rounded-xl">
-                <div id="like-pets" class="grid grid-cols-2 ">
-                    
+                <div class="border border-gray-300 my-12 rounded-xl">
+                    <div id="like-pets" class="grid grid-cols-2 ">
 
-                </div>
+
+                    </div>
                 </div>
             </div>
         </section>
@@ -120,36 +130,36 @@
     </main>
 
     <!-- this modal for adopt button -->
-    <dialog  id="my_modal_1" class="modal">
-      <div class="modal-box text-center">
-        <i class="fa-solid fa-hands-clapping text-yellow-300 text-5xl pt-8"></i>
-        <h3 class="py-3 text-4xl font-bold">Congrates !</h3>
-        <p class="text-xl font-semibold py-6">
-          You have successfully adopted this pet.
-        </p>
-        <h1 id="countdown-container" class="py-3 text-5xl font-bold">3</h1>
-        <div class="modal-action">
-          <form method="dialog">
-            <!-- if there is a button in form, it will close the modal -->
-            <button id="close"></button>
-          </form>
+    <dialog id="my_modal_1" class="modal">
+        <div class="modal-box text-center">
+            <i class="fa-solid fa-hands-clapping text-yellow-300 text-5xl pt-8"></i>
+            <h3 class="py-3 text-4xl font-bold">Congrates !</h3>
+            <p class="text-xl font-semibold py-6">
+                You have successfully adopted this pet.
+            </p>
+            <h1 id="countdown-container" class="py-3 text-5xl font-bold">3</h1>
+            <div class="modal-action">
+                <form method="dialog">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button id="close"></button>
+                </form>
+            </div>
         </div>
-      </div>
     </dialog>
 
     <!-- this modal for details button-->
     <dialog id="customModal" class="modal modal-bottom sm:modal-middle">
-      <div class="modal-box">
-        <div id="details-container"></div>
-        <div class="btn flex justify-center items-center bg-teal-50">
-          <div class="modal-action m-0">
-            <form method="dialog">
-              <!-- if there is a button in form, it will close the modal -->
-              <button class="text-xl text-teal-900 font-bold w-full">Close</button>
-            </form>
-          </div>
+        <div class="modal-box">
+            <div id="details-container"></div>
+            <div class="btn flex justify-center items-center bg-teal-50">
+                <div class="modal-action m-0">
+                    <form method="dialog">
+                        <!-- if there is a button in form, it will close the modal -->
+                        <button class="text-xl text-teal-900 font-bold w-full">Close</button>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
     </dialog>
 
 
@@ -210,6 +220,3 @@
 </body>
 
 </html>
-
-
-
